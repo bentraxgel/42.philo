@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 21:27:34 by seok              #+#    #+#             */
-/*   Updated: 2023/08/14 22:52:30 by seok             ###   ########.fr       */
+/*   Updated: 2023/08/15 19:09:59 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 # include <unistd.h>
 # include <stdbool.h>
 # include <stdlib.h>
+
+# define ERROR -1
+# define E_ARG "ERROR : The arguments is not satisfied.\n"
 
 typedef enum e_status
 {
@@ -35,12 +38,18 @@ typedef struct s_src
 	int	must_eat;
 }t_src;
 
-typedef struct s_philo
-{
+// typedef struct s_philo
+// {
 
-}
+// };
 
 // library.c
+// int	my_atoi(const char *str, int *ret);
 int	my_atoi(const char *str);
+int	my_check_digit(const char *str);
+size_t	ft_strlen(const char *s);
+
+// main.c
+int	arg_exception(int ac, char *av[], t_src *src);
 
 #endif
