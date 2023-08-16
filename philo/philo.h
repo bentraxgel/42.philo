@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kumamon <kumamon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 21:27:34 by seok              #+#    #+#             */
-/*   Updated: 2023/08/15 19:09:59 by seok             ###   ########.fr       */
+/*   Updated: 2023/08/16 11:41:59 by kumamon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ typedef struct s_src
 	int	must_eat;
 }t_src;
 
-// typedef struct s_philo
-// {
-
-// };
+typedef struct s_philo
+{
+	
+};
 
 // library.c
 // int	my_atoi(const char *str, int *ret);

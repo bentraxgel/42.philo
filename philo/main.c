@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kumamon <kumamon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 21:22:44 by seok              #+#    #+#             */
-/*   Updated: 2023/08/15 19:10:14 by seok             ###   ########.fr       */
+/*   Updated: 2023/08/16 11:40:30 by kumamon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,7 @@ int	arg_exception(int ac, char *av[], t_src *src)
 	int		i;
 
 	if (ac < 5 || ac > 6)
-	{
-		printf(E_ARG);
 		return (false);
-	}
 	src->total_philo = my_atoi(av[1]);
 	src->time_to_die = my_atoi(av[2]);
 	src->time_to_eat = my_atoi(av[3]);
@@ -29,10 +26,7 @@ int	arg_exception(int ac, char *av[], t_src *src)
 		src->must_eat = my_atoi(av[5]);
 	if (src->total_philo <= 0 || src->time_to_die <= 0 || \
 		src->time_to_eat <= 0 || src->time_to_sleep <= 0 || src->must_eat < 0)
-	{
-		printf(E_ARG);
 		return (false);
-	}
 	printf("%d, ", src->total_philo);
 	printf("%d, ", src->time_to_die);
 	printf("%d, ", src->time_to_eat);
@@ -46,5 +40,6 @@ int	main(int ac, char *av[])
 	t_src	src;
 
 	if (arg_exception(ac, av, &src) == false)
-		return (false);
+		return (E_ARG);
+	if ()
 }
