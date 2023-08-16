@@ -6,7 +6,7 @@
 /*   By: kumamon <kumamon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 21:27:34 by seok              #+#    #+#             */
-/*   Updated: 2023/08/16 11:41:59 by kumamon          ###   ########.fr       */
+/*   Updated: 2023/08/16 21:11:41 by kumamon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef enum e_status
 
 typedef struct s_src
 {
-	int	total_philo;
+	int	num_of_philo;
 	int	time_to_die;
 	int	time_to_eat;
 	int	time_to_sleep;
