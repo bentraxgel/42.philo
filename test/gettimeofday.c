@@ -21,6 +21,8 @@ int	main()
 	gettimeofday(&tv, NULL);
 	end = (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000;
 
-	printf("execution time%f\n", (end - begin) / 1000);
+	// double	diff = (((end.tv_sec - start.tv_sec) * 1000) + ((end.tv_usec - start.tv_usec) / 1000));
+	printf("%f - %f\n", begin, end);
+	printf("execution time%f\n", (end - begin));
 	return (0);
 }
