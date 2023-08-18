@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 19:44:40 by seok              #+#    #+#             */
-/*   Updated: 2023/08/19 01:27:35 by seok             ###   ########.fr       */
+/*   Updated: 2023/08/19 03:47:16 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	init_args(int ac, char *av[], t_arg *arg)
 	if (av[5] != NULL)
 		arg->must_eat = my_atoi(av[5]);
 	arg->start_time = get_time();
+	printf("*start : %lld\n", arg->start_time);
 	if (arg->total_philo <= 0 || arg->time_to_die <= 0 || \
 		arg->time_to_eat <= 0 || arg->time_to_sleep <= 0 || arg->must_eat < 0)
 		return (false);
@@ -34,60 +35,30 @@ int	init_args(int ac, char *av[], t_arg *arg)
 	return (true);
 }
 
-// t_fork *init_fork(t_arg *arg, t_fork *fork)
-// TODO ACCESS
 t_fork *init_fork(t_arg *arg)
 {
 	int 	i;
 	t_fork	*fork;
 
 	fork = malloc(sizeof(t_fork) * arg->total_philo);
-	printf("add : %p\n", fork);
 	if (fork == FAIL)
 		return (NULL);
 	i = -1;
 	while (++i < arg->total_philo)
 	{
 		pthread_mutex_init(&fork[i].mutex, NULL);
-		fork[i].status = 100;
-		fork[i].ret = 'A';
-		printf("*********[%d] _%d\n", i, fork[i].status);
+		fork[i].status = UNLOCK;
 	}
 	return (fork);
 }
-// int	init_fork(t_arg *arg, t_fork *fork)
-// {
-// 	int 	i;
-	
-// 	fork = malloc(sizeof(t_fork) * arg->total_philo);
-// 	printf("add : %p\n", fork);
-// 	if (fork == FAIL)
-// 		return (false);
-// 	i = -1;
-// 	while (++i < arg->total_philo)
-// 	{
-// 		pthread_mutex_init(&fork[i].mutex, NULL);
-// 		fork[i].status = 100;
-// 		fork[i].ret = 'A';
-// 		printf("*********[%d] _%d\n", i, fork[i].status);
-// 	}
-// 	return (true);
-// }
 
 void	init_philo_arg(t_arg *arg, t_philo *philo, t_fork *fork)
 {
-	printf("_add : %p\n", fork);
-	printf("fork : %d\n", fork[0].status);
-	printf("ret : %c\n", fork[0].ret);
-	printf("ret : %c\n", fork[1].ret);
 	philo->arg = arg;
 	philo->eat_cnt = 0;
 	philo->fork[LEFT] = &fork[philo->name];
 	philo->fork[RIGHT] = &fork[(philo->name + 1) % arg->total_philo];
-	printf("%d %d\n", philo->name, (philo->name + 1) % arg->total_philo);
-	printf(">>>%d %d\n", philo->fork[LEFT]->status, philo->fork[RIGHT]->status);
-
-	printf("**fork[%d]_%d\n", philo->name, fork[philo->name].status);
+	philo->fork[LEFT]->num = philo->name + 1;
 }
 
 int	init_philo(t_arg *arg, t_fork *fork)
@@ -108,7 +79,7 @@ int	init_philo(t_arg *arg, t_fork *fork)
 		init_philo_arg(arg, &philo[i], fork);
 		if (pthread_create(&philo[i].tid, NULL, (void *)routine, &philo[i]))
 			return (ft_free(philo[i].tid), false);
-		usleep(1 * 1000);
+		usleep(1);
 		i++;
 	}
 	return(true);

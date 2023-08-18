@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 21:27:34 by seok              #+#    #+#             */
-/*   Updated: 2023/08/19 01:27:44 by seok             ###   ########.fr       */
+/*   Updated: 2023/08/19 03:37:44 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct s_fork
 {
 	int				status;
 	pthread_mutex_t	mutex;
-	char		ret;
+	int num;
 }t_fork;
 
 /*
@@ -106,6 +106,8 @@ long long	get_time();
 int			ft_free(void *arg);
 void	print_shell(t_philo *philo, char *str);
 void	is_dead(t_philo *philo);
+void	philos_usleep(int milli_seconds);
+void	drop_fork(t_philo *philo, int flag);
 void	eating(t_philo *philo);
 void	sleeping(t_philo *philo);
 
