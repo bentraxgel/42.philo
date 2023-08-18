@@ -3,53 +3,116 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kumamon <kumamon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 21:22:44 by seok              #+#    #+#             */
-/*   Updated: 2023/08/18 02:00:16 by kumamon          ###   ########.fr       */
+/*   Updated: 2023/08/18 22:46:58 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	init_args(int ac, char *av[], t_arg *arg)
+int	monitoring(t_philo *philo)
 {
-	int		i;
+	int	flag;
 
-	if (ac < 5 || ac > 6)
-		return (false);
-	arg->total_philo = my_atoi(av[1]);
-	arg->time_to_die = my_atoi(av[2]);
-	arg->time_to_eat = my_atoi(av[3]);
-	arg->time_to_sleep = my_atoi(av[4]);
-	if (av[5] != NULL)
-		arg->must_eat = my_atoi(av[5]);
-	if (arg->total_philo <= 0 || arg->time_to_die <= 0 || \
-		arg->time_to_eat <= 0 || arg->time_to_sleep <= 0 || arg->must_eat < 0)
-		return (false);
-	printf("%d, ", arg->total_philo);
-	printf("%d, ", arg->time_to_die);
-	printf("%d, ", arg->time_to_eat);
-	printf("%d, ", arg->time_to_sleep);
-	printf("%d\n", arg->must_eat);
-	return (true);
+	flag = LIVE;
+	pthread_mutex_lock(&philo->arg->monitor.mu_dead);
+	if (philo->arg->monitor.dead_flag == DEAD)
+		flag = DEAD;
+	pthread_mutex_unlock(&philo->arg->monitor.mu_dead);
+	if (flag == DEAD)
+		return (flag);
+	
+	pthread_mutex_lock(&philo->arg->monitor.mu_all_eat);
+	if (philo->arg->monitor.eat_cnt == philo->arg->total_philo)
+		flag = DEAD;
+	pthread_mutex_unlock(&philo->arg->monitor.mu_all_eat);
+	if (flag == DEAD)
+		return (flag);
+	return (flag);
+}
+
+void	pick_up_fork(t_philo *philo, int flag)
+{
+	pthread_mutex_lock(&philo->fork[flag].mutex);
+	if (philo->fork[flag].status == UNLOCK)
+	{
+		philo->fork[flag].status = LOCK;
+		print_shell(philo, "has taken a fork");
+	}
+	pthread_mutex_unlock(&philo->fork[flag].mutex);
+}
+
+void	routine(t_philo *philo)
+{
+	if (monitoring == DEAD)
+		return (ERROR);
+	//왼쪽 포크 집기
+	pick_up_fork(philo, LEFT);
+
+	//--->대기
+	//오른쪽 포크 집기
+	if (philo->fork[LEFT].status == LOCK)
+		pick_up_fork(philo, RIGHT);
+	if (philo->arg->must_eat > 0)
+	{
+		if (philo->eat_cnt < philo->arg->must_eat)
+		{
+			eating()
+			sleeping()
+		}
+		if (is_dead(philo) == DEAD)
+			return (ERROR);
+		//thinking()
+		print_shell(philo, "is thinking");
+	}
+	else
+	{
+		eating()
+		sleeping()
+		if (is_dead(philo) == DEAD)
+			return (ERROR);
+		//thinking()
+		print_shell(philo, "is thinking");
+	}
+
+/*
+1. 포크를 잡았는데 죽은경우 포크 반환
+2. 철학자 한명일 경우 포크 잡고 죽을때까지 대기
+*/
+	return (NULL);
+}
+
+	// pthread_mutex_lock(&philo->fork->mutex);
+	// 	fork[LEFT]
+
+int	ft_free(void *mem, int i)
+{
+	int	j;
+
+	j = -1;
+	if (i == ERROR)
+		free(mem);
+	while (++j < i)
+		free(&mem[i]);
+	return (false);
 }
 
 int	main(int ac, char *av[])
 {
 	t_arg	arg;
+	t_fork	fork;
+	t_philo	philo;
 
 	if (init_args(ac, av, &arg) == false)
-		return (E_ARG);
-	if ()
+		return (printf(E_ARG));
+	printf("total : %d\n", arg.total_philo); //TODO del
+	// if ()
 	// 철학자 한명일 경우 예외처리 따로 해야함.
-	// if (arg.total_philo == 1)
-	// 	return (0);
-	init_philo;
-}
-
-void	init_philo()
-{
-	pthread_t	philo;
-	
-}
+	if (arg.total_philo == 1)
+		return (usleep(arg.time_to_die),);
+	if (init_fork(&arg, &fork) == false)
+		return (printf(E_ALLOC));
+	if (init_philo(&philo, &fork) == false)
+		return (printf(E_ALLOC));

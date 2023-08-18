@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 21:34:04 by seok              #+#    #+#             */
-/*   Updated: 2023/08/15 18:54:14 by seok             ###   ########.fr       */
+/*   Updated: 2023/08/18 13:09:01 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,28 +65,3 @@ int	my_atoi(const char *str)
 		return (ERROR);
 	return ((int)result);
 }
-
-// int	my_atoi(const char *str, int *ret)
-// {
-// 	int			cnt;
-// 	long long	result;
-
-// 	cnt = 0;
-// 	result = 0;
-// 	while (*str == 32 || (8 < *str && *str < 14))
-// 		str++;
-// 	if (my_check_digit(str) == false)
-// 		return (false);
-// 	if (*str == '-' || *str == '+')
-// 		str++;
-// 	while ('0' <= *str && *str <= '9')
-// 	{
-// 		result = (result * 10) + *str - '0';
-// 		str++;
-// 		cnt++;
-// 	}
-// 	if (cnt > 10 || result == 0)
-// 		return (false);
-// 	*ret = (int)result;
-// 	return (true);
-// }
