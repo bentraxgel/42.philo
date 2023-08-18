@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 13:54:02 by seok              #+#    #+#             */
-/*   Updated: 2023/08/18 22:33:36 by seok             ###   ########.fr       */
+/*   Updated: 2023/08/18 23:27:42 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,14 @@ void	is_dead(t_philo *philo)
 	if (current_time - philo->last_eat_time >= philo->arg->time_to_die)
 		philo->arg->monitor.dead_flag == DEAD;
 	print_shell(philo, "died");
+}
+
+void	eating(t_philo *philo)
+{
+	print_time(philo, "is eating");
+}
+
+void	sleeping(t_philo *philo)
+{
+	print_time(philo, "is sleeping");
 }

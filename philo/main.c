@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 21:22:44 by seok              #+#    #+#             */
-/*   Updated: 2023/08/18 22:46:58 by seok             ###   ########.fr       */
+/*   Updated: 2023/08/18 23:28:11 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,21 +59,19 @@ void	routine(t_philo *philo)
 	{
 		if (philo->eat_cnt < philo->arg->must_eat)
 		{
-			eating()
-			sleeping()
+			eating(philo);
+			sleeping(philo);
 		}
 		if (is_dead(philo) == DEAD)
 			return (ERROR);
-		//thinking()
 		print_shell(philo, "is thinking");
 	}
 	else
 	{
-		eating()
-		sleeping()
+		eating(philo);
+		sleeping(philo);
 		if (is_dead(philo) == DEAD)
 			return (ERROR);
-		//thinking()
 		print_shell(philo, "is thinking");
 	}
 
