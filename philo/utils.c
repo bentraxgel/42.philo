@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 13:54:02 by seok              #+#    #+#             */
-/*   Updated: 2023/08/18 23:27:42 by seok             ###   ########.fr       */
+/*   Updated: 2023/08/19 00:47:33 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,21 @@ void	print_shell(t_philo *philo, char *str)
 
 void	is_dead(t_philo *philo)
 {
+	long long	current_time;
+
+	current_time = get_time();
 	if (current_time - philo->last_eat_time >= philo->arg->time_to_die)
-		philo->arg->monitor.dead_flag == DEAD;
+		philo->arg->monitor.dead_flag = DEAD;
 	print_shell(philo, "died");
+	// TODO +add : 포크 잡은 경우 drop_fork();
 }
 
 void	eating(t_philo *philo)
 {
-	print_time(philo, "is eating");
+	print_shell(philo, "is eating");
 }
 
 void	sleeping(t_philo *philo)
 {
-	print_time(philo, "is sleeping");
+	print_shell(philo, "is sleeping");
 }
