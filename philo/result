@@ -14,6 +14,7 @@ RIGHT_1
 ELSE
 0 1 is eating
 sleep
+//TODO 내 포크 남의 포크 주소 확인해보기
 1[1_] : 0x7fe944f05c30
 --- philo[1]_fork idx----
 	L[1] R[2]
