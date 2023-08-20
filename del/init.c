@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kumamon <kumamon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 19:44:40 by seok              #+#    #+#             */
-/*   Updated: 2023/08/19 16:10:24 by kumamon          ###   ########.fr       */
+/*   Updated: 2023/08/20 19:43:26 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ long long	get_time()
 
 int	init_args(int ac, char *av[], t_arg *arg)
 {
-	printf("sldkfj\n");
 	if (ac < 5 || ac > 6)
 		return (false);
 	arg->total_philo = my_atoi(av[1]);

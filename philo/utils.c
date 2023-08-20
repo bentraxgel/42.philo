@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kumamon <kumamon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 13:54:02 by seok              #+#    #+#             */
-/*   Updated: 2023/08/19 16:28:45 by kumamon          ###   ########.fr       */
+/*   Updated: 2023/08/20 22:21:12 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,28 +32,27 @@ int ft_free(void *arg)
 
 void	print_shell(t_philo *philo, char *str)
 {
-	// printf("shell : %lld\n", philo->arg->start_time);
 	long long	current_time;
 	long long	print_time;
 
 	pthread_mutex_lock(&philo->arg->monitor.mu_print);
 	current_time = get_time();
-	// printf(">> %lld - ", current_time);
-	// printf("%lld\n", philo->arg->start_time);
 	print_time = current_time - philo->arg->start_time;
-	// printf(" = %lld\n", print_time);
 	pthread_mutex_unlock(&philo->arg->monitor.mu_print);
-	printf("%lld %d %s\n", print_time, philo->name + 1, str);
+	printf("\t\t%lld %d %s\n", print_time, philo->name + 1, str);
 }
-
-void	is_dead(t_philo *philo)
+//TODO 반환값 생기게하자
+int	is_dead(t_philo *philo)
 {
 	long long	current_time;
 
 	current_time = get_time();
 	if (current_time - philo->last_eat_time >= philo->arg->time_to_die)
-		philo->arg->monitor.dead_flag = DEAD;
-	print_shell(philo, "died");
+	{
+		mutex_write(&philo->arg->monitor.mu_dead, &philo->arg->monitor.dead_flag, DEAD);
+		print_shell(philo, "died");
+	}
+	return (true);
 	// TODO +add : 포크 잡은 경우 drop_fork();
 }
 

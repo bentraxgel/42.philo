@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 21:34:04 by seok              #+#    #+#             */
-/*   Updated: 2023/08/18 13:09:01 by seok             ###   ########.fr       */
+/*   Updated: 2023/08/20 19:43:22 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	my_atoi(const char *str)
 		str++;
 	if (my_check_digit(str) == false)
 		return (ERROR);
-	if (*str == '-' || *str == '+')
+	if  (*str == '+')
 		str++;
 	while ('0' <= *str && *str <= '9')
 	{

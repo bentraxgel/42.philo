@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kumamon <kumamon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 19:44:40 by seok              #+#    #+#             */
-/*   Updated: 2023/08/20 09:47:34 by kumamon          ###   ########.fr       */
+/*   Updated: 2023/08/20 22:56:36 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	init_args(int ac, char *av[], t_arg *arg)
 		arg->av_option = true;
 	}
 	arg->start_time = get_time();
-	// printf("*start : %lld\n", arg->start_time);
+	printf("*start : %lld\n", arg->start_time);
 	if (arg->total_philo <= 0 || arg->time_to_die <= 0 || \
 		arg->time_to_eat <= 0 || arg->time_to_sleep <= 0 || arg->must_eat < 0)
 		return (false);
@@ -81,17 +81,28 @@ int	init_philo(t_arg *arg, t_fork *fork)
 	while (i < arg->total_philo)
 	{
 		printf("1[%d_] : %p\n", i, &philo[i]);
-		philo[i].tid = malloc(sizeof(pthread_t));
-		if (philo[i].tid == FAIL)
-			return (ft_free(philo[i].tid), false);
+		// philo[i].tid = malloc(sizeof(pthread_t));
+		// if (philo[i].tid == FAIL)
+		// 	return (ft_free(philo[i].tid), false);
 		philo[i].name = i;
 		init_philo_arg(arg, &philo[i], fork);
 	printf("**fork : %p : %d\n", &fork[philo[i].name], fork[philo[i].name].num);
 	printf("*philo : %p : %d\n", philo[i].fork[LEFT], philo[i].fork[LEFT]->num);
-		if (pthread_create(&philo[i].tid, NULL, (void *)routine, &philo[i]))
+		if (pthread_create(&philo[i].tid, NULL, (void *)routine, &philo[i])) //TODO 이전애들도 다 free해줘야함
 			return (ft_free(philo[i].tid), false);
-		usleep(1);
+		usleep(1000);
 		i++;
 	}
+	i = 0;
+	while (i < arg->total_philo)
+	{
+		pthread_join(philo[i].tid, NULL);
+		i++;
+	}
+	//TODO philo[].tid ->free
+	// i = -1;
+	// while (++i < arg->total_philo)
+	// 	free(philo[i].tid);
+	free(philo);
 	return(true);
 }

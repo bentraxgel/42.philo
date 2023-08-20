@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kumamon <kumamon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 21:27:34 by seok              #+#    #+#             */
-/*   Updated: 2023/08/19 22:45:01 by kumamon          ###   ########.fr       */
+/*   Updated: 2023/08/20 21:45:42 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,21 @@
 
 typedef enum e_status
 {
-	DEAD = 0,
-	LIVE
+	LIVE = 0,
+	DEAD
 }t_status;
 
 typedef enum e_fork_flag
 {
 	LEFT = 0,
 	RIGHT,
+	UNLOCK,
 	LOCK,
-	UNLOCK
 }t_fork_flag;
 
 typedef struct s_fork
 {
-	int				status;
+	t_fork_flag		status;
 	pthread_mutex_t	mutex;
 	int num;
 }t_fork;
@@ -106,10 +106,14 @@ int	init_philo(t_arg *arg, t_fork *fork);
 long long	get_time();
 int			ft_free(void *arg);
 void	print_shell(t_philo *philo, char *str);
-void	is_dead(t_philo *philo);
+int	is_dead(t_philo *philo);
 void	philos_usleep(int milli_seconds);
 void	drop_fork(t_philo *philo, int flag);
 void	eating(t_philo *philo);
 void	sleeping(t_philo *philo);
+
+// mutex.c
+int mutex_read(pthread_mutex_t *mutex, int *variable);
+void mutex_write(pthread_mutex_t *mutex, int *variable, int flag);
 
 #endif

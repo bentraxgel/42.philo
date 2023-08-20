@@ -6,7 +6,7 @@
 #    By: seok <seok@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/19 00:34:24 by seok              #+#    #+#              #
-#    Updated: 2023/08/19 00:49:36 by seok             ###   ########.fr        #
+#    Updated: 2023/08/20 21:46:13 by seok             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ CFLAGS = -Wall -Wextra -Werror
 NAME = philo
 INCD = philo.h
 
-SRCS = main.c library.c init.c utils.c
+SRCS = main.c library.c init.c utils.c mutex.c
 OBJS = $(SRCS:.c=.o)
 
 $(NAME): $(OBJS)

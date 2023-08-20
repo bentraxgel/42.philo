@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kumamon <kumamon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 21:22:44 by seok              #+#    #+#             */
-/*   Updated: 2023/08/20 09:36:33 by kumamon          ###   ########.fr       */
+/*   Updated: 2023/08/20 23:03:34 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,11 @@
 
 int	monitoring(t_philo *philo)
 {
-	int	flag;
-
-	flag = LIVE;
-	pthread_mutex_lock(&philo->arg->monitor.mu_dead);
-	if (philo->arg->monitor.dead_flag == DEAD)
-		flag = DEAD;
-	pthread_mutex_unlock(&philo->arg->monitor.mu_dead);
-	if (flag == DEAD)
-		return (flag);
-	
-	pthread_mutex_lock(&philo->arg->monitor.mu_all_eat);
-	if (philo->arg->av_option == true && philo->arg->monitor.eat_cnt == philo->arg->total_philo)
-		flag = DEAD;
-	pthread_mutex_unlock(&philo->arg->monitor.mu_all_eat);
-	if (flag == DEAD)
-		return (flag);
-	return (flag);
+	if (mutex_read(&philo->arg->monitor.mu_dead, &philo->arg->monitor.dead_flag) == DEAD)
+		return (DEAD);
+	if (mutex_read(&philo->arg->monitor.mu_all_eat, &philo->arg->monitor.eat_cnt) == philo->arg->total_philo)
+		return (DEAD);
+	return (LIVE);
 }
 
 void	pick_up_fork(t_philo *philo, int flag)
@@ -58,23 +46,19 @@ int	routine(t_philo *philo)
 {
 	printf("routine ->");
 	printf("R[%d] : %p\n", philo->name, philo);
-	// printf("routine : %lld\n", philo->arg->start_time);
+	printf("*routine : %lld\n", philo->arg->start_time);
 	// if (philo->n`(500);
 	while (1)
 	{
-		printf("TIME : %lld\n", philo->arg->start_time - get_time());
+		printf("TIME : %lld\n",get_time() - philo->arg->start_time);
 		if (monitoring(philo) == DEAD)
 		{
 			printf(">>>monitor\n");
 			return (ERROR);
 		}
-		//왼쪽 포크 집기
 		pick_up_fork(philo, LEFT);
+		if (philo->fork[LEFT]->status == LOCK)
 			pick_up_fork(philo, RIGHT);
-		//--->대기
-		//오른쪽 포크 집기
-		// if (philo->fork[LEFT]->status == LOCK)
-		// 	pick_up_fork(philo, RIGHT);
 		if (philo->arg->av_option == true)
 		{
 			printf("IF\n");
@@ -113,7 +97,7 @@ int	main(int ac, char *av[])
 
 	if (init_args(ac, av, &arg) == false)
 		return (printf(E_ARG));
-	// 철학자 한명일 경우 예외처리 따로 해야함.
+	// 철학자 한명일 경우 예외처리 따로 해야함. // 에러가 아니고 
 	if (arg.total_philo == 1)
 		return (usleep(arg.time_to_die), printf("one_philo\n"));
 	fork = init_fork(&arg);
@@ -121,4 +105,15 @@ int	main(int ac, char *av[])
 		return (printf(E_ALLOC));
 	if (init_philo(&arg, fork) == false)
 		return (printf(E_ALLOC));
+}
+
+int	msleep(long long start, long long end, t_philo *philo)
+{
+	while (get_time() - start < end)
+	{
+		if (is_dead(philo) == DEAD)
+			return (false);
+		usleep(100);
+	}
+	return (true);
 }
