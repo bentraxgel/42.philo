@@ -1,0 +1,45 @@
+1[0_] : 0x7fe944f05c00
+--- philo[0]_fork idx----
+	L[0] R[1]
+**fork : 0x7fe944f05b10 : 0
+*philo : 0x7fe944f05b10 : 0
+routine ->R[0] : 0x7fe944f05c00
+TIME : 0
+philo_name : 1
+LEFT_0
+0 1 has taken a fork
+philo_name : 1
+RIGHT_1
+0 1 has taken a fork
+ELSE
+0 1 is eating
+sleep
+1[1_] : 0x7fe944f05c30
+--- philo[1]_fork idx----
+	L[1] R[2]
+**fork : 0x7fe944f05b60 : 1
+*philo : 0x7fe944f05b60 : 1
+routine ->R[1] : 0x7fe944f05c30
+TIME : 0
+philo_name : 2
+LEFT_1
+philo_name : 2
+RIGHT_2
+0 2 has taken a fork
+ELSE
+1[2_] : 0x7fe944f05c60
+0 2 is eating
+sleep
+--- philo[2]_fork idx----
+	L[2] R[0]
+**fork : 0x7fe944f05bb0 : 2
+*philo : 0x7fe944f05bb0 : 2
+routine ->R[2] : 0x7fe944f05c60
+TIME : 0
+philo_name : 3
+LEFT_2
+philo_name : 3
+RIGHT_0
+ELSE
+0 3 is eating
+sleep

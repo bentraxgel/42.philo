@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kumamon <kumamon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 13:54:02 by seok              #+#    #+#             */
-/*   Updated: 2023/08/19 03:48:33 by seok             ###   ########.fr       */
+/*   Updated: 2023/08/19 16:28:45 by kumamon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,16 @@ int ft_free(void *arg)
 
 void	print_shell(t_philo *philo, char *str)
 {
-	printf("shell : %lld\n", philo->arg->start_time);
+	// printf("shell : %lld\n", philo->arg->start_time);
 	long long	current_time;
 	long long	print_time;
 
 	pthread_mutex_lock(&philo->arg->monitor.mu_print);
 	current_time = get_time();
-	printf(">> %lld - ", current_time);
-	printf("%lld\n", philo->arg->start_time);
+	// printf(">> %lld - ", current_time);
+	// printf("%lld\n", philo->arg->start_time);
 	print_time = current_time - philo->arg->start_time;
-	printf(" = %lld\n", print_time);
+	// printf(" = %lld\n", print_time);
 	pthread_mutex_unlock(&philo->arg->monitor.mu_print);
 	printf("%lld %d %s\n", print_time, philo->name + 1, str);
 }

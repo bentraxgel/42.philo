@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kumamon <kumamon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 19:44:40 by seok              #+#    #+#             */
-/*   Updated: 2023/08/19 04:25:30 by seok             ###   ########.fr       */
+/*   Updated: 2023/08/19 16:10:24 by kumamon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	init_args(int ac, char *av[], t_arg *arg)
 	if (av[5] != NULL)
 		arg->must_eat = my_atoi(av[5]);
 	arg->start_time = get_time();
-	printf("*start : %lld\n", arg->start_time);
+	// printf("*start : %lld\n", arg->start_time);
 	if (arg->total_philo <= 0 || arg->time_to_die <= 0 || \
 		arg->time_to_eat <= 0 || arg->time_to_sleep <= 0 || arg->must_eat < 0)
 		return (false);
@@ -44,10 +44,18 @@ int	init_args(int ac, char *av[], t_arg *arg)
 	return (true);
 }
 
-void	print_(t_phlio *phlio)
+void	print_(t_arg *arg)
 {
-	printf("%d, %d, %d, %d, ", philo->arg->total_philo, philo->arg->time_to_die, philo->arg->time_to_eat, philo->arg->time_to_sleep);
-	printf("%d\n", philo->arg->must_eat);
-	printf("start : %lld\n", philo->arg->start_time);
-	printf("monitor : %d %d\n", philo->arg->monitor.dead_flag, philo->arg->monitor.eat_cnt);
+	printf("%d, %d, %d, %d, ", arg->total_philo, arg->time_to_die, arg->time_to_eat, arg->time_to_sleep);
+	printf("%d\n", arg->must_eat);
+	printf("start : %lld\n", arg->start_time);
+	printf("monitor : %d %d\n", arg->monitor.dead_flag, arg->monitor.eat_cnt);
 }
+
+// void	print_(t_philo *philo)
+// {
+// 	printf("%d, %d, %d, %d, ", philo->arg->total_philo, philo->arg->time_to_die, philo->arg->time_to_eat, philo->arg->time_to_sleep);
+// 	printf("%d\n", philo->arg->must_eat);
+// 	printf("start : %lld\n", philo->arg->start_time);
+// 	printf("monitor : %d %d\n", philo->arg->monitor.dead_flag, philo->arg->monitor.eat_cnt);
+// }

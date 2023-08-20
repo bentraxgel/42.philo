@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kumamon <kumamon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 21:22:44 by seok              #+#    #+#             */
-/*   Updated: 2023/08/19 04:31:00 by seok             ###   ########.fr       */
+/*   Updated: 2023/08/19 12:26:23 by kumamon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	main(int ac, char *av[])
 	// fork = init_fork(&arg);
 	// if (fork == NULL)
 	// 	return (printf(E_ALLOC));
-	if ( init_philo(&arg, fork) == false)
-		return (printf(E_ALLOC));
+	printf("3 : %lld\n", arg.start_time);
+	// if ( init_philo(&arg, fork) == false)
+	// 	return (printf(E_ALLOC));
 }
