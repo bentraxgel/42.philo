@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 19:44:40 by seok              #+#    #+#             */
-/*   Updated: 2023/08/20 22:56:36 by seok             ###   ########.fr       */
+/*   Updated: 2023/08/21 12:08:38 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	init_philo_arg(t_arg *arg, t_philo *philo, t_fork *fork)
 {
 	philo->arg = arg;
 	philo->eat_cnt = 0;
+	philo->last_eat_time = get_time();
 	philo->fork[LEFT] = &fork[philo->name];
 	philo->fork[RIGHT] = &fork[(philo->name + 1) % arg->total_philo];
 	printf("--- philo[%d]_fork idx----\n", philo->name);
@@ -80,16 +81,10 @@ int	init_philo(t_arg *arg, t_fork *fork)
 		return (ft_free(philo), false);
 	while (i < arg->total_philo)
 	{
-		printf("1[%d_] : %p\n", i, &philo[i]);
-		// philo[i].tid = malloc(sizeof(pthread_t));
-		// if (philo[i].tid == FAIL)
-		// 	return (ft_free(philo[i].tid), false);
 		philo[i].name = i;
 		init_philo_arg(arg, &philo[i], fork);
-	printf("**fork : %p : %d\n", &fork[philo[i].name], fork[philo[i].name].num);
-	printf("*philo : %p : %d\n", philo[i].fork[LEFT], philo[i].fork[LEFT]->num);
-		if (pthread_create(&philo[i].tid, NULL, (void *)routine, &philo[i])) //TODO 이전애들도 다 free해줘야함
-			return (ft_free(philo[i].tid), false);
+		if (pthread_create(&philo[i].tid, NULL, (void *)routine, &philo[i]))
+			return (ft_free(philo), false);
 		usleep(1000);
 		i++;
 	}
@@ -99,10 +94,6 @@ int	init_philo(t_arg *arg, t_fork *fork)
 		pthread_join(philo[i].tid, NULL);
 		i++;
 	}
-	//TODO philo[].tid ->free
-	// i = -1;
-	// while (++i < arg->total_philo)
-	// 	free(philo[i].tid);
 	free(philo);
 	return(true);
 }

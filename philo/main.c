@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 21:22:44 by seok              #+#    #+#             */
-/*   Updated: 2023/08/20 23:03:34 by seok             ###   ########.fr       */
+/*   Updated: 2023/08/21 13:21:35 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,13 @@
 
 int	monitoring(t_philo *philo)
 {
-	if (mutex_read(&philo->arg->monitor.mu_dead, &philo->arg->monitor.dead_flag) == DEAD)
+	if (is_dead(philo) == DEAD)
 		return (DEAD);
-	if (mutex_read(&philo->arg->monitor.mu_all_eat, &philo->arg->monitor.eat_cnt) == philo->arg->total_philo)
+	if (mutex_read(&philo->arg->monitor.mu_dead, \
+		&philo->arg->monitor.dead_flag) == DEAD)
+		return (DEAD);
+	if (mutex_read(&philo->arg->monitor.mu_all_eat, \
+		&philo->arg->monitor.eat_cnt) == philo->arg->total_philo)
 		return (DEAD);
 	return (LIVE);
 }
@@ -42,42 +46,55 @@ void	pick_up_fork(t_philo *philo, int flag)
 	// printf("END\n");
 }
 
+int	eating(t_philo *philo)
+{
+	monitoring(philo);
+	philo->last_eat_time = get_time();
+
+}
+
+int	dining(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->fork[LEFT]->mutex);
+	philo->fork[LEFT]->status = LOCK;
+	if (philo->fork[LEFT]->status == LOCK)
+	{
+		pthread_mutex_lock(&philo->fork[RIGHT]->mutex);
+		philo->fork[RIGHT]->status = LOCK;
+		eating(philo);
+	}
+}
+
 int	routine(t_philo *philo)
 {
-	printf("routine ->");
-	printf("R[%d] : %p\n", philo->name, philo);
+	//TODO 짝수애들 먹는시간 /2만큼 재우기`
 	printf("*routine : %lld\n", philo->arg->start_time);
-	// if (philo->n`(500);
-	while (1)
+	while (true)
 	{
-		printf("TIME : %lld\n",get_time() - philo->arg->start_time);
 		if (monitoring(philo) == DEAD)
-		{
-			printf(">>>monitor\n");
-			return (ERROR);
-		}
-		pick_up_fork(philo, LEFT);
-		if (philo->fork[LEFT]->status == LOCK)
-			pick_up_fork(philo, RIGHT);
-		if (philo->arg->av_option == true)
-		{
-			printf("IF\n");
-			if (philo->eat_cnt < philo->arg->must_eat)
-			{
-				eating(philo);
-				sleeping(philo);
-			}
-			is_dead(philo);
-			print_shell(philo, "is thinking");
-		}
-		else
-		{
-			printf("ELSE\n");
-			eating(philo);
-			sleeping(philo);
-			is_dead(philo);
-			print_shell(philo, "is thinking");
-		}
+			return (DEAD);
+		dining(philo);
+		//TODO 다먹은 애 cnt++해줘야함.
+		// pick_up_fork(philo, LEFT);
+		// if (philo->fork[LEFT]->status == LOCK)
+		// 	pick_up_fork(philo, RIGHT);
+		// if (philo->arg->av_option == true)
+		// {
+		// 	if (philo->eat_cnt < philo->arg->must_eat) // 다먹었을때 wirte
+		// 	{
+		// 		eating(philo);
+		// 		sleeping(philo);
+		// 	}
+		// 	is_dead(philo);
+		// 	print_shell(philo, "is thinking");
+		// }
+		// else
+		// {
+		// 	eating(philo);
+		// 	sleeping(philo);
+		// 	is_dead(philo);
+		// 	print_shell(philo, "is thinking");
+		// }
 	}
 
 /*

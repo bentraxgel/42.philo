@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 13:54:02 by seok              #+#    #+#             */
-/*   Updated: 2023/08/20 22:21:12 by seok             ###   ########.fr       */
+/*   Updated: 2023/08/21 12:44:37 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,13 @@ int	is_dead(t_philo *philo)
 	current_time = get_time();
 	if (current_time - philo->last_eat_time >= philo->arg->time_to_die)
 	{
-		mutex_write(&philo->arg->monitor.mu_dead, &philo->arg->monitor.dead_flag, DEAD);
+		mutex_write(&philo->arg->monitor.mu_dead, \
+					&philo->arg->monitor.dead_flag, DEAD);
 		print_shell(philo, "died");
 	}
+	//TODO must_eat : 근데 이 위치는 아닌듯...
+	// if (philo->arg->av_option == true && philo->eat_cnt < philo->arg->must_eat)
+	// 	mutex_write(&philo->arg->monitor.)
 	return (true);
 	// TODO +add : 포크 잡은 경우 drop_fork();
 }

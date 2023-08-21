@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 20:01:45 by seok              #+#    #+#             */
-/*   Updated: 2023/08/20 20:56:29 by seok             ###   ########.fr       */
+/*   Updated: 2023/08/21 13:14:43 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,3 +29,8 @@ void mutex_write(pthread_mutex_t *mutex, int *variable, int flag)
 	*variable = flag;
 	pthread_mutex_unlock(mutex);
 }
+
+//TODO add -> mutex_cnt() ->다먹은 철학자 명수 올려주는 것.
+/*
+
+*/
