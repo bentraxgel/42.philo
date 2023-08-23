@@ -6,7 +6,7 @@
 /*   By: kumamon <kumamon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 21:27:34 by seok              #+#    #+#             */
-/*   Updated: 2023/08/23 09:18:31 by kumamon          ###   ########.fr       */
+/*   Updated: 2023/08/23 09:43:27 by kumamon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ typedef struct s_philo
 	pthread_t		tid;
 	int				name;
 	int				eat_cnt;
+	int				eat_finish;
 	long long		last_eat_time;
 	t_fork			*fork[2];
 	t_arg			*arg;

@@ -6,7 +6,7 @@
 /*   By: kumamon <kumamon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 19:44:40 by seok              #+#    #+#             */
-/*   Updated: 2023/08/23 08:53:23 by kumamon          ###   ########.fr       */
+/*   Updated: 2023/08/23 09:50:58 by kumamon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	init_philo_arg(t_arg *arg, t_philo *philo, t_fork *fork)
 {
 	philo->arg = arg;
 	philo->eat_cnt = 0;
+	philo->eat_finish = UNLOCK;
 	philo->last_eat_time = get_time();
 	philo->fork[LEFT] = &fork[philo->name];
 	philo->fork[RIGHT] = &fork[(philo->name + 1) % arg->total_philo];
