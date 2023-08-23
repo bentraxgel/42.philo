@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kumamon <kumamon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 21:22:44 by seok              #+#    #+#             */
-/*   Updated: 2023/08/21 13:21:35 by seok             ###   ########.fr       */
+/*   Updated: 2023/08/23 09:19:53 by kumamon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,55 +25,62 @@ int	monitoring(t_philo *philo)
 	return (LIVE);
 }
 
-void	pick_up_fork(t_philo *philo, int flag)
-{
-	printf("philo_name : %d\n", philo->name + 1);
-	// printf("pick\n");
-	if (flag == LEFT)
-		printf("LEFT_%d\n", philo->fork[flag]->num);
-	else
-		printf("RIGHT_%d\n", philo->fork[flag]->num);
-	pthread_mutex_lock(&philo->fork[flag]->mutex);
-	if (philo->fork[flag]->status == UNLOCK)
-	{
-		philo->fork[flag]->status = LOCK;
-		print_shell(philo, "has taken a fork");
-		pthread_mutex_unlock(&philo->fork[flag]->mutex);
-		return ;
-	}
-	pthread_mutex_unlock(&philo->fork[flag]->mutex);
-	// usleep(500);
-	// printf("END\n");
-}
+// void	pick_up_fork(t_philo *philo, int flag)
+// {
+// 	printf("philo_name : %d\n", philo->name + 1);
+// 	if (flag == LEFT)
+// 		printf("LEFT_%d\n", philo->fork[flag]->num);
+// 	else
+// 		printf("RIGHT_%d\n", philo->fork[flag]->num);
+// 	pthread_mutex_lock(&philo->fork[flag]->mutex);
+// 	if (philo->fork[flag]->status == UNLOCK)
+// 	{
+// 		philo->fork[flag]->status = LOCK;
+// 		print_shell(philo, "has taken a fork");
+// 		pthread_mutex_unlock(&philo->fork[flag]->mutex);
+// 		return ;
+// 	}
+// 	pthread_mutex_unlock(&philo->fork[flag]->mutex);
+// 	// usleep(500);
+// 	// printf("END\n");
+// }
 
-int	eating(t_philo *philo)
+void	eating(t_philo *philo)
 {
 	monitoring(philo);
 	philo->last_eat_time = get_time();
-
+	print_shell(philo, "is eating");
+	msleep(philo->last_eat_time, philo->arg->time_to_eat, philo);
+	mutex_cnt(philo->arg->monitor.mu_all_eat, philo->arg->monitor.eat_cnt);
+	//TODO 여기 하고있었음
 }
 
-int	dining(t_philo *philo)
+void	dining(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->fork[LEFT]->mutex);
-	philo->fork[LEFT]->status = LOCK;
-	if (philo->fork[LEFT]->status == LOCK)
-	{
+	// philo->fork[LEFT]->status = LOCK;
+	// if (philo->fork[LEFT]->status == LOCK)
+	// {
 		pthread_mutex_lock(&philo->fork[RIGHT]->mutex);
-		philo->fork[RIGHT]->status = LOCK;
+		// philo->fork[RIGHT]->status = LOCK;
 		eating(philo);
-	}
+		pthread_mutex_unlock(&philo->fork[RIGHT]->mutex);
+	// }
+	pthread_mutex_unlock(&philo->fork[LEFT]->mutex);
 }
 
 int	routine(t_philo *philo)
 {
 	//TODO 짝수애들 먹는시간 /2만큼 재우기`
+	if ((philo->name + 1) % 2 == 0)
+		msleep(philo->last_eat_time, philo->arg->time_to_eat / 2, philo);
 	printf("*routine : %lld\n", philo->arg->start_time);
 	while (true)
 	{
 		if (monitoring(philo) == DEAD)
 			return (DEAD);
 		dining(philo);
+		sleep();
 		//TODO 다먹은 애 cnt++해줘야함.
 		// pick_up_fork(philo, LEFT);
 		// if (philo->fork[LEFT]->status == LOCK)
@@ -85,7 +92,7 @@ int	routine(t_philo *philo)
 		// 		eating(philo);
 		// 		sleeping(philo);
 		// 	}
-		// 	is_dead(philo);
+			// is_dead(philo);
 		// 	print_shell(philo, "is thinking");
 		// }
 		// else

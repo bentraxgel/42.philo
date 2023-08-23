@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kumamon <kumamon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 21:27:34 by seok              #+#    #+#             */
-/*   Updated: 2023/08/20 21:45:42 by seok             ###   ########.fr       */
+/*   Updated: 2023/08/23 09:18:31 by kumamon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,5 +115,6 @@ void	sleeping(t_philo *philo);
 // mutex.c
 int mutex_read(pthread_mutex_t *mutex, int *variable);
 void mutex_write(pthread_mutex_t *mutex, int *variable, int flag);
+void	mutex_cnt(pthread_mutex_t *mutex, int *variable);
 
 #endif
