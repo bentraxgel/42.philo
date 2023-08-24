@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kumamon <kumamon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 19:44:40 by seok              #+#    #+#             */
-/*   Updated: 2023/08/23 09:50:58 by kumamon          ###   ########.fr       */
+/*   Updated: 2023/08/24 19:10:22 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	init_args(int ac, char *av[], t_arg *arg)
 		arg->av_option = true;
 	}
 	arg->start_time = get_time();
-	printf("*start : %lld\n", arg->start_time);
 	if (arg->total_philo <= 0 || arg->time_to_die <= 0 || \
 		arg->time_to_eat <= 0 || arg->time_to_sleep <= 0 || arg->must_eat < 0)
 		return (false);
@@ -63,11 +62,11 @@ void	init_philo_arg(t_arg *arg, t_philo *philo, t_fork *fork)
 	philo->arg = arg;
 	philo->eat_cnt = 0;
 	philo->eat_finish = UNLOCK;
-	philo->last_eat_time = get_time();
+	pthread_mutex_init(&philo->mu_time, NULL);
+	mutex_long_write(&philo->mu_time, &philo->last_eat_time, get_time());
+	// philo->last_eat_time = get_time();
 	philo->fork[LEFT] = &fork[philo->name];
 	philo->fork[RIGHT] = &fork[(philo->name + 1) % arg->total_philo];
-	printf("--- philo[%d]_fork idx----\n", philo->name);
-	printf("\tL[%d] R[%d]\n", philo->name, (philo->name + 1) % arg->total_philo);
 	// philo->fork[LEFT]->num = philo->name;
 }
 
@@ -86,9 +85,10 @@ int	init_philo(t_arg *arg, t_fork *fork)
 		init_philo_arg(arg, &philo[i], fork);
 		if (pthread_create(&philo[i].tid, NULL, (void *)routine, &philo[i]))
 			return (ft_free(philo), false);
-		usleep(1000);
+		// usleep(1000);
 		i++;
 	}
+	thread_manager(philo);
 	i = 0;
 	while (i < arg->total_philo)
 	{

@@ -6,7 +6,7 @@
 #    By: seok <seok@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/19 00:34:24 by seok              #+#    #+#              #
-#    Updated: 2023/08/20 21:46:13 by seok             ###   ########.fr        #
+#    Updated: 2023/08/24 18:37:48 by seok             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,11 +32,11 @@
 
 # .PHONY : clean fclean all re
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=thread
 NAME = philo
 INCD = philo.h
 
-SRCS = main.c library.c init.c utils.c mutex.c
+SRCS = main.c library.c init.c utils.c mutex.c behavior.c monitor.c
 OBJS = $(SRCS:.c=.o)
 
 $(NAME): $(OBJS)

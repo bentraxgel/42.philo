@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kumamon <kumamon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 21:27:34 by seok              #+#    #+#             */
-/*   Updated: 2023/08/23 09:43:27 by kumamon          ###   ########.fr       */
+/*   Updated: 2023/08/24 18:54:15 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef enum e_fork_flag
 
 typedef struct s_fork
 {
-	t_fork_flag		status;
+	int				status;
 	pthread_mutex_t	mutex;
 	int num;
 }t_fork;
@@ -77,6 +77,7 @@ typedef struct s_arg
 typedef struct s_philo
 {
 	pthread_t		tid;
+	pthread_mutex_t	mu_time;
 	int				name;
 	int				eat_cnt;
 	int				eat_finish;
@@ -86,36 +87,46 @@ typedef struct s_philo
 }t_philo;
 
 
-// library.c
-int	my_atoi(const char *str);
-int	my_check_digit(const char *str);
-size_t	ft_strlen(const char *s);
 
 // main.c
-int		monitoring(t_philo *philo);
-void	pick_up_fork(t_philo *philo, int flag);
-int	routine(t_philo *philo);
+// void		pick_up_fork(t_philo *philo, int flag);
+
+// behavior.c
+void		routine(t_philo *philo);
+int			dining(t_philo *philo);
+void		eating(t_philo *philo);
+int			sleeping(t_philo *philo);
+int			thinking(t_philo *philo);
 
 // init.c
-int	init_args(int ac, char *av[], t_arg *arg);
-// int	init_fork(t_arg *arg, t_fork *fork);
-t_fork	*init_fork(t_arg *arg);
-void	init_philo_arg(t_arg *arg, t_philo *philo, t_fork *fork);
-int	init_philo(t_arg *arg, t_fork *fork);
+int			init_args(int ac, char *av[], t_arg *arg);
+// int		init_fork(t_arg *arg, t_fork *fork);
+t_fork		*init_fork(t_arg *arg);
+void		init_philo_arg(t_arg *arg, t_philo *philo, t_fork *fork);
+int			init_philo(t_arg *arg, t_fork *fork);
+
+// library.c
+int			my_atoi(const char *str);
+int			my_check_digit(const char *str);
+size_t		ft_strlen(const char *s);
+
+// monitor.c
+int			is_dead(t_philo *philo);
+int			monitoring(t_philo *philo);
+void		thread_manager(t_philo *philo);
+
+// mutex.c
+int			mutex_read(pthread_mutex_t *mutex, int *variable);
+void		mutex_write(pthread_mutex_t *mutex, int *variable, int flag);
+int			mutex_long_read(pthread_mutex_t *mutex, long long *variable);
+void		mutex_long_write(pthread_mutex_t *mutex, long long *variable, long long flag);
+void		mutex_cnt(pthread_mutex_t *mutex, int *variable);
 
 //  utils.c
 long long	get_time();
 int			ft_free(void *arg);
-void	print_shell(t_philo *philo, char *str);
-int	is_dead(t_philo *philo);
-void	philos_usleep(int milli_seconds);
-void	drop_fork(t_philo *philo, int flag);
-void	eating(t_philo *philo);
-void	sleeping(t_philo *philo);
-
-// mutex.c
-int mutex_read(pthread_mutex_t *mutex, int *variable);
-void mutex_write(pthread_mutex_t *mutex, int *variable, int flag);
-void	mutex_cnt(pthread_mutex_t *mutex, int *variable);
+int			print_shell(t_philo *philo, char *str);
+int			msleep(long long start, long long end, t_philo *philo);
+void		drop_fork(t_philo *philo, int flag);
 
 #endif

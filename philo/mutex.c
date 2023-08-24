@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mutex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kumamon <kumamon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/20 20:01:45 by seok              #+#    #+#             */
-/*   Updated: 2023/08/23 09:18:23 by kumamon          ###   ########.fr       */
+/*   Updated: 2023/08/24 19:30:39 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,24 @@ int	mutex_read(pthread_mutex_t *mutex, int *variable)
 
 // 스레드가 공유하는 자원에 원하는 값을 써주는 함수
 void	mutex_write(pthread_mutex_t *mutex, int *variable, int flag)
+{
+	pthread_mutex_lock(mutex);
+	*variable = flag;
+	pthread_mutex_unlock(mutex);
+}
+
+int	mutex_long_read(pthread_mutex_t *mutex, long long *variable)
+{
+	int ret;
+
+	pthread_mutex_lock(mutex);
+	ret = *variable;
+	pthread_mutex_unlock(mutex);
+	return (ret);
+}
+
+// 스레드가 공유하는 자원에 원하는 값을 써주는 함수
+void	mutex_long_write(pthread_mutex_t *mutex, long long *variable, long long flag)
 {
 	pthread_mutex_lock(mutex);
 	*variable = flag;
