@@ -6,7 +6,7 @@
 /*   By: kumamon <kumamon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 21:22:44 by seok              #+#    #+#             */
-/*   Updated: 2023/08/23 10:12:51 by kumamon          ###   ########.fr       */
+/*   Updated: 2023/08/24 10:39:21 by kumamon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,11 @@ int	monitoring(t_philo *philo)
 // }
 void	sleeping(t_philo *philo)
 {
+	long long	start_sleep;
+	monitoring(philo);
+	print_shell(philo, "is sleeping");
+	start_sleep = get_time();
+	msleep(start_sleep, philo->arg->time_to_sleep, philo);
 	//TODO 여기 하고있었음
 }
 void	eating(t_philo *philo)
@@ -91,8 +96,9 @@ int	routine(t_philo *philo)
 		if (philo->eat_finish == UNLOCK)
 		{
 			dining(philo);
-			sleeping();
+			sleeping(philo);
 		}
+		//TODO thinking();
 		//TODO 다먹은 애 cnt++해줘야함.
 		// pick_up_fork(philo, LEFT);
 		// if (philo->fork[LEFT]->status == LOCK)
