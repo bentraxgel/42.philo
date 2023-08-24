@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 13:17:10 by seok              #+#    #+#             */
-/*   Updated: 2023/08/24 23:15:08 by seok             ###   ########.fr       */
+/*   Updated: 2023/08/24 23:24:35 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	pick_up_fork(t_philo *philo, int flag)
 			return (LIVE);
 		}
 		pthread_mutex_unlock(&philo->fork[flag]->mutex);
-		usleep(200);
+		// usleep(200); //TODO&
 	}
 }
 
@@ -117,6 +117,7 @@ void	eating(t_philo *philo)
 {
 	// mutex_long_write(&philo->mu_time, &philo->last_eat_time, get_time());
 	// printf("eating1\n"); //&&
+	//TODO&
 	// pthread_mutex_lock(&philo->mu_time);
 	philo->last_eat_time = get_time();
 	// pthread_mutex_unlock(&philo->mu_time);

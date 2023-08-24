@@ -15,7 +15,7 @@ int	pick_up_fork(t_philo *philo, int flag)
 			return (LIVE);
 		}
 		pthread_mutex_unlock(&philo->fork[flag]->mutex);
-		usleep(200);
+		// usleep(200);
 	}
 }
 
@@ -36,4 +36,5 @@ int	dining(t_philo *philo)
 	eating(philo);
 	put_down_fork(philo, LEFT);
 	put_down_fork(philo, RIGHT);
+	return (LIVE);
 }
