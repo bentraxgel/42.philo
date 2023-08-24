@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 13:54:02 by seok              #+#    #+#             */
-/*   Updated: 2023/08/24 19:43:36 by seok             ###   ########.fr       */
+/*   Updated: 2023/08/24 22:55:00 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	print_shell(t_philo *philo, char *str)
 {
 	long long	current_time;
 	long long	print_time;
+	// printf("print_shell\n"); //&&
 	pthread_mutex_lock(&philo->arg->monitor.mu_print);
 	if (mutex_read(&philo->arg->monitor.mu_dead, &philo->arg->monitor.dead_flag) == DEAD)
 	{
@@ -50,7 +51,8 @@ int	print_shell(t_philo *philo, char *str)
 
 int	msleep(long long start, long long end, t_philo *philo)
 {
-	while (get_time() - start <= end)
+	while (get_time() <= end + start)
+	// while (get_time() - start <= end)
 	{
 		if (is_dead(philo) == DEAD)
 			return (DEAD);
@@ -58,6 +60,22 @@ int	msleep(long long start, long long end, t_philo *philo)
 	}
 	return (LIVE);
 }
+
+// int	msleep(long long start, long long end, t_philo *philo)
+// {
+// 	(void)start;
+// 	long long cur = get_time();
+// 	while (get_time() <= cur + end)
+// 	{
+// 		if (is_dead(philo) == DEAD)
+// 			return (DEAD);
+// 		usleep(300);
+// 	}
+// 	return (LIVE);
+// }
+
+
+
 
 // void	drop_fork(t_philo *philo, int flag)
 // {

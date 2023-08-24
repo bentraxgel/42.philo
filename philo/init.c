@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 19:44:40 by seok              #+#    #+#             */
-/*   Updated: 2023/08/24 19:10:22 by seok             ###   ########.fr       */
+/*   Updated: 2023/08/24 23:15:46 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ void	init_philo_arg(t_arg *arg, t_philo *philo, t_fork *fork)
 	philo->eat_cnt = 0;
 	philo->eat_finish = UNLOCK;
 	pthread_mutex_init(&philo->mu_time, NULL);
-	mutex_long_write(&philo->mu_time, &philo->last_eat_time, get_time());
+	philo->last_eat_time = get_time();
+	// mutex_long_write(&philo->mu_time, &philo->last_eat_time, get_time());
 	// philo->last_eat_time = get_time();
 	philo->fork[LEFT] = &fork[philo->name];
 	philo->fork[RIGHT] = &fork[(philo->name + 1) % arg->total_philo];
@@ -85,10 +86,10 @@ int	init_philo(t_arg *arg, t_fork *fork)
 		init_philo_arg(arg, &philo[i], fork);
 		if (pthread_create(&philo[i].tid, NULL, (void *)routine, &philo[i]))
 			return (ft_free(philo), false);
-		// usleep(1000);
+		usleep(1000);
 		i++;
 	}
-	thread_manager(philo);
+	// thread_manager(philo);
 	i = 0;
 	while (i < arg->total_philo)
 	{
