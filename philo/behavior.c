@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 13:17:10 by seok              #+#    #+#             */
-/*   Updated: 2023/08/25 12:19:39 by seok             ###   ########.fr       */
+/*   Updated: 2023/08/25 13:58:27 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 void	routine(t_philo *philo)
 {
-	//TODO 짝수애들 먹는시간 /2만큼 재우기`
+	//TODO 짝수애들 먹는시간 /2만큼 재우기
 	if ((philo->name + 1) % 2 == 0)
 		msleep(philo->last_eat_time, philo->arg->time_to_eat / 2, philo);
 		// msleep(get_time(), philo->arg->time_to_eat / 2, philo);
 		// msleep(mutex_long_read(&philo->mu_time, &philo->last_eat_time), philo->arg->time_to_eat / 2, philo);
 	while (true)
 	{
-		if (monitoring(philo) == DEAD)
-			return ;
+		// if (monitoring(philo) == DEAD)
+		// 	return ;
 			// return (DEAD);
 		if (philo->arg->total_philo == 1)
 		{
@@ -118,8 +118,8 @@ void	eating(t_philo *philo)
 	// mutex_long_write(&philo->mu_time, &philo->last_eat_time, get_time());
 	// printf("eating1\n"); //&&
 	// pthread_mutex_lock(&philo->mu_time);
-	philo->last_eat_time = get_time();
 	// pthread_mutex_unlock(&philo->mu_time);
+	philo->last_eat_time = get_time();
 	monitoring(philo);
 
 	if (print_shell(philo, "is eating") == false)
@@ -153,8 +153,8 @@ int	sleeping(t_philo *philo)
 	if (print_shell(philo, "is sleeping") == false)
 		return (DEAD);
 	msleep(start_sleep, philo->arg->time_to_sleep, philo);
-	if (mutex_read(&philo->arg->monitor.mu_dead, &philo->arg->monitor.dead_flag) == DEAD)
-		return (DEAD);
+	// if (mutex_read(&philo->arg->monitor.mu_dead, &philo->arg->monitor.dead_flag) == DEAD)
+	// 	return (DEAD);
 	return (LIVE);
 }
 
@@ -163,8 +163,8 @@ int	thinking(t_philo *philo)
 	monitoring(philo);
 	if (print_shell(philo, "is thinking") == false)
 		return (DEAD);
-	usleep(100);
-	if (mutex_read(&philo->arg->monitor.mu_dead, &philo->arg->monitor.dead_flag) == DEAD)
-		return (DEAD);
+	// usleep(100);
+	// if (mutex_read(&philo->arg->monitor.mu_dead, &philo->arg->monitor.dead_flag) == DEAD)
+	// 	return (DEAD);
 	return (LIVE);
 }

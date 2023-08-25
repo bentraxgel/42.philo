@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 21:27:34 by seok              #+#    #+#             */
-/*   Updated: 2023/08/24 18:54:15 by seok             ###   ########.fr       */
+/*   Updated: 2023/08/25 13:46:24 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ typedef struct s_arg
 	int			time_to_sleep;
 	int			must_eat;
 	int			av_option;
-	long long	start_time;
+	// long long	start_time;
 	t_monitor	monitor;
 }t_arg;
 
@@ -81,6 +81,7 @@ typedef struct s_philo
 	int				name;
 	int				eat_cnt;
 	int				eat_finish;
+	long long	start_time;
 	long long		last_eat_time;
 	t_fork			*fork[2];
 	t_arg			*arg;

@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 19:44:40 by seok              #+#    #+#             */
-/*   Updated: 2023/08/25 12:17:59 by seok             ###   ########.fr       */
+/*   Updated: 2023/08/25 13:56:59 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	init_args(int ac, char *av[], t_arg *arg)
 		arg->must_eat = my_atoi(av[5]);
 		arg->av_option = true;
 	}
-	arg->start_time = get_time();
+	// arg->start_time = get_time();
 	if (arg->total_philo <= 0 || arg->time_to_die <= 0 || \
 		arg->time_to_eat <= 0 || arg->time_to_sleep <= 0 || arg->must_eat < 0)
 		return (false);
@@ -63,9 +63,10 @@ void	init_philo_arg(t_arg *arg, t_philo *philo, t_fork *fork)
 	philo->eat_cnt = 0;
 	philo->eat_finish = UNLOCK;
 	pthread_mutex_init(&philo->mu_time, NULL);
-	philo->last_eat_time = get_time();
 	// mutex_long_write(&philo->mu_time, &philo->last_eat_time, get_time());
 	// philo->last_eat_time = get_time();
+	philo->start_time = get_time();
+	philo->last_eat_time = get_time();
 	philo->fork[LEFT] = &fork[philo->name];
 	philo->fork[RIGHT] = &fork[(philo->name + 1) % arg->total_philo];
 	// philo->fork[LEFT]->num = philo->name;

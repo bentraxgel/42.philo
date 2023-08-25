@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 13:54:02 by seok              #+#    #+#             */
-/*   Updated: 2023/08/24 22:55:00 by seok             ###   ########.fr       */
+/*   Updated: 2023/08/25 13:55:30 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	print_shell(t_philo *philo, char *str)
 	}
 	// usleep(100);
 	current_time = get_time();
-	print_time = current_time - philo->arg->start_time;
+	print_time = current_time - philo->start_time;
 	printf("\t\t%lld %d %s\n", print_time, philo->name + 1, str);
 	pthread_mutex_unlock(&philo->arg->monitor.mu_print);
 	return (true);
@@ -56,7 +56,7 @@ int	msleep(long long start, long long end, t_philo *philo)
 	{
 		if (is_dead(philo) == DEAD)
 			return (DEAD);
-		usleep(300);
+		usleep(100);
 	}
 	return (LIVE);
 }
