@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 19:44:40 by seok              #+#    #+#             */
-/*   Updated: 2023/08/24 23:15:46 by seok             ###   ########.fr       */
+/*   Updated: 2023/08/25 12:17:59 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	init_philo(t_arg *arg, t_fork *fork)
 		init_philo_arg(arg, &philo[i], fork);
 		if (pthread_create(&philo[i].tid, NULL, (void *)routine, &philo[i]))
 			return (ft_free(philo), false);
-		usleep(1000);
+		// usleep(1000);
 		i++;
 	}
 	// thread_manager(philo);

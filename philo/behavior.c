@@ -6,7 +6,7 @@
 /*   By: seok <seok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 13:17:10 by seok              #+#    #+#             */
-/*   Updated: 2023/08/24 23:24:35 by seok             ###   ########.fr       */
+/*   Updated: 2023/08/25 12:19:39 by seok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ int	dining(t_philo *philo)
 	if (pick_up_fork(philo, RIGHT) == DEAD)
 		return (DEAD);
 	eating(philo);
-	put_down_fork(philo, LEFT);
 	put_down_fork(philo, RIGHT);
+	put_down_fork(philo, LEFT);
 	return (LIVE);
 }
 // int	dining(t_philo *philo)
@@ -117,7 +117,6 @@ void	eating(t_philo *philo)
 {
 	// mutex_long_write(&philo->mu_time, &philo->last_eat_time, get_time());
 	// printf("eating1\n"); //&&
-	//TODO&
 	// pthread_mutex_lock(&philo->mu_time);
 	philo->last_eat_time = get_time();
 	// pthread_mutex_unlock(&philo->mu_time);
@@ -164,7 +163,7 @@ int	thinking(t_philo *philo)
 	monitoring(philo);
 	if (print_shell(philo, "is thinking") == false)
 		return (DEAD);
-	usleep(200);
+	usleep(100);
 	if (mutex_read(&philo->arg->monitor.mu_dead, &philo->arg->monitor.dead_flag) == DEAD)
 		return (DEAD);
 	return (LIVE);
